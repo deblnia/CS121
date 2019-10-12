@@ -33,7 +33,7 @@ def count_ever_infected(city):
         elif y == 'R':
             count += 1
     # REPLACE -1 WITH THE APPROPRIATE INTEGER
-    return count
+    return int(count)
 
 
 def has_an_infected_neighbor(city, position):
@@ -240,11 +240,10 @@ def calc_avg_num_newly_infected(
         end_inf = int(count_ever_infected(all_sim[-1]))
         print(end_inf, "ever infected")
         print(end_inf - start_inf, "new infected")
-        if (end_inf > start_inf) :
-            diff.append(end_inf - start_inf)
-        start_inf = end_inf 
-        random_seed = random_seed + 1
-        diffsum = sum(diff)
+        diff.append(end_inf - start_inf)
+        random_seed += 1
+    start_inf = end_inf 
+    diffsum = sum(diff)
     return diffsum/num_trials
 #     # REPLACE -1.0 WITH THE APPROPRIATE FLOATING POINT VALUE
 
