@@ -10,8 +10,7 @@ import random
 
 import click
 
-# This seed should be used for debugging purposes only!  Do not refer
-# to it in your code.
+
 TEST_SEED = 20170217
 
 def count_ever_infected(city):
@@ -24,15 +23,12 @@ def count_ever_infected(city):
     Returns (int): count of the number of people who have been
       infected at some time.
     '''
-
-    # YOUR CODE HERE
     count = 0 
     for y in city:
         if y[0] == 'I':
             count += 1
         elif y == 'R':
             count += 1
-    # REPLACE -1 WITH THE APPROPRIATE INTEGER
     return int(count)
 
 
@@ -51,16 +47,14 @@ def has_an_infected_neighbor(city, position):
     
     assert city[position] == "S"
 
-
-# YOUR CODE HERE
     if len(city) == 1: #list of one 
         return False 
-    elif position == 0: #first element -- not sure about this 
+    elif position == 0: #first element 
         if city[1][0] == "I": 
           return True
         else: 
           return False 
-    elif position == len(city) - 1: #last element -- not sure about this 
+    elif position == len(city) - 1: #last element 
         if city[-2][0] == "I":
           return True 
         else: 
@@ -93,14 +87,12 @@ def gets_infected_at_position(city, position, infection_rate):
 #     # is susceptible to infection.
 #     assert city[position] == "S"
 
-#     # YOUR CODE HERE
     if has_an_infected_neighbor(city, position) == True: 
         if random.random() < infection_rate: 
             return True
         else: 
             return False 
     else: 
-        # REPLACE None WITH THE APPROPRIATE BOOLEAN VALUE
         return False     
 
 
@@ -119,8 +111,6 @@ def advance_person_at_position(city, position,
 
 #     Returns: (string) disease state of the person after one day
 #     '''
-
-#     # YOUR CODE HERE
     if city[position] == "S": 
         if gets_infected_at_position(city, position, infection_rate): 
             return "I0"
@@ -133,7 +123,6 @@ def advance_person_at_position(city, position,
         else: 
             return 'R'
     elif city[position] == "R": 
-   # REPLACE None WITH THE APPROPRIATE STRING
         return 'R'
 
 def simulate_one_day(starting_city, infection_rate, days_contagious):
@@ -150,14 +139,12 @@ def simulate_one_day(starting_city, infection_rate, days_contagious):
 #       new_city (list): disease state of the city after one day
 #     '''
 
-#     # YOUR CODE HERE
     end_city = []
     for i in range(len(starting_city)): #could also use ennumerate 
         end_city.append(advance_person_at_position(starting_city,i,
             infection_rate, days_contagious))
     return end_city 
 
-#     # REPLACE None WITH THE APPROPRIATE LIST OF STRINGS
 
 def run_simulation(starting_city, random_seed, max_num_days,
                    infection_rate, days_contagious):
@@ -179,7 +166,6 @@ def run_simulation(starting_city, random_seed, max_num_days,
 #     '''
     assert max_num_days >= 0
 
-#     # YOUR CODE HERE
     random.seed(random_seed)
     post_sim_1day = [] #list of all cities
     post_sim_1day.append(simulate_one_day(starting_city, 
@@ -195,9 +181,6 @@ def run_simulation(starting_city, random_seed, max_num_days,
             if post_sim_1day[-1] == post_sim_1day[-2]: 
                 return (post_sim_1day[-1], num_days)
         return (post_sim_1day[-1], num_days)
-
-#     # REPLACE (None, None) WITH THE APPROPRIATE TUPLE
-#     #  (city, number of days simulated)
 
 
 def calc_avg_num_newly_infected(
@@ -224,7 +207,6 @@ def calc_avg_num_newly_infected(
     assert max_num_days >= 0
     assert num_trials > 0
 
-#     # YOUR CODE HERE
 def calc_avg_num_newly_infected(
          starting_city, random_seed, max_num_days,
          infection_rate, days_contagious, num_trials):
@@ -245,7 +227,6 @@ def calc_avg_num_newly_infected(
     start_inf = end_inf 
     diffsum = sum(diff)
     return diffsum/num_trials
-#     # REPLACE -1.0 WITH THE APPROPRIATE FLOATING POINT VALUE
 
 
 ################ Do not change the code below this line #######################
