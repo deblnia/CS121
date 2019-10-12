@@ -44,7 +44,6 @@ def has_an_infected_neighbor(city, position):
 #     Returns:
 #       True, if the person has an infected neighbor, False otherwise.
 #     '''
-    
     assert city[position] == "S"
 
     if len(city) == 1: #list of one 
@@ -54,7 +53,7 @@ def has_an_infected_neighbor(city, position):
           return True
         else: 
           return False 
-    elif position == len(city) - 1: #last element 
+    elif position == len(city) - 1: #last element -- city[-1] seemed inconsistent?
         if city[-2][0] == "I":
           return True 
         else: 
@@ -66,6 +65,7 @@ def has_an_infected_neighbor(city, position):
           return True 
         else: 
             return False 
+
 
 def gets_infected_at_position(city, position, infection_rate):
 #     '''
@@ -125,6 +125,7 @@ def advance_person_at_position(city, position,
     elif city[position] == "R": 
         return 'R'
 
+
 def simulate_one_day(starting_city, infection_rate, days_contagious):
 #     '''
 #     Move the simulation forward a single day.
@@ -142,7 +143,7 @@ def simulate_one_day(starting_city, infection_rate, days_contagious):
     end_city = []
     for i in range(len(starting_city)): #could also use ennumerate 
         end_city.append(advance_person_at_position(starting_city,i,
-            infection_rate, days_contagious))
+                        infection_rate, days_contagious))
     return end_city 
 
 
@@ -169,7 +170,7 @@ def run_simulation(starting_city, random_seed, max_num_days,
     random.seed(random_seed)
     post_sim_1day = [] #list of all cities
     post_sim_1day.append(simulate_one_day(starting_city, 
-        infection_rate, days_contagious))
+                        infection_rate, days_contagious))
     num_days = 1
     if post_sim_1day[0] == starting_city: 
         return(post_sim_1day[0], num_days)
@@ -207,17 +208,14 @@ def calc_avg_num_newly_infected(
     assert max_num_days >= 0
     assert num_trials > 0
 
-def calc_avg_num_newly_infected(
-         starting_city, random_seed, max_num_days,
-         infection_rate, days_contagious, num_trials):
     start_inf = count_ever_infected(starting_city)
     all_sim = []
     diff = []
     for i in range(num_trials): 
         print(start_inf, "starting infected")
         print(random_seed, "random")
-        all_sim.append(run_simulation(starting_city, random_seed, max_num_days, 
-                                      infection_rate, days_contagious)[0])
+        all_sim.append(run_simulation(starting_city, random_seed, 
+                        max_num_days, infection_rate, days_contagious)[0])
         print(all_sim[i])
         end_inf = int(count_ever_infected(all_sim[-1]))
         print(end_inf, "ever infected")
