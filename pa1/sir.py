@@ -4,7 +4,7 @@ Epidemic modelling
 Deblina Mukherjee
 
 Functions for running a simple epidemiological simulation
-'''
+''
 
 import random
 
@@ -33,7 +33,7 @@ def count_ever_infected(city):
 
 
 def has_an_infected_neighbor(city, position):
-#     '''
+    '''
 #     Determine whether a person has an infected neighbor
 
 #     Inputs:
