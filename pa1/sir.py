@@ -4,7 +4,7 @@ Epidemic modelling
 Deblina Mukherjee
 
 Functions for running a simple epidemiological simulation
-''
+'''
 
 import random
 
