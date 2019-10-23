@@ -101,7 +101,7 @@ def calc_idf(corpus):
                 denom[word] = 1
     for key,value in denom.items():
         print(value,"value")
-        idf.append(math.log*(numer/value)) 
+        idf.append((key,math.log*(numer/value))) 
     return idf
 
 
