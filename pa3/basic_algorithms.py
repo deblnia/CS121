@@ -74,36 +74,43 @@ def find_min_count(tokens, min_count):
     return good_vals
     # Replace return value with an appropriate value
 
-def calc_tf(document): 
+def calc_idf(docs): 
+    #computes tf and idf 
+    numer = len(docs)
+    uniquewords = []
+    idf = dict()
+    for doc in docs: 
+        uniquewords = count_tokens(doc)
+        for key,value in uniquewords: 
+            idf[key] = idf.get(key, 0)+1
+    for value in idf.values(): 
+        value = math.log(numer/value)
+    return idf
+
+def calc_tf(docs): 
     '''
     docstring
     '''
-    numerator = count_tokens(document)
-    denominator = find_top_k(document, 1)[0][1]
-    tf = list()
-    for key,value in numerator: 
-        tf.append(0.5+0.5*value/denominator)
-    return tf 
-
-def calc_idf(corpus): 
-    #computes tf and idf 
-    numer = len(corpus)
-    count_list = []
-    denom = dict()
-    idf = []
-    for lists in corpus: 
-        count_list.append(count_tokens(lists))
-    for token in count_list: 
-        for word in token: 
-            if word in denom: 
-                denom[word] += 1
-            else: 
-                denom[word] = 1
-    for key,value in denom.items():
-        print(value,"value")
-        idf.append((key,math.log*(numer/value))) 
-    return idf
-
+    # loop through each doc calc tf scores for each doc using count_token 
+    # multiply by idf 
+    # sort using sort count pairs and then slice and return 
+    # sort list retrned from count_tokens and use first 
+    # do it in one loop 
+    # append intermediate lists into return value  
+    # list of dictionaries (key, value)   
+    # change values in dictionary 
+    tf_full = []
+    for doc in docs: 
+        if len(doc) == 0:
+            tf_full.append({})  
+        else:
+            sorted_count = sort_count_pairs(count_tokens(doc))
+            max_tf = sorted_count[0][1]
+            tf_doc = {}
+            for k,v in sorted_count: 
+                tf_doc[k] = 0.5+0.5*(v/max_tf)
+            tf_full.append(tf_doc) 
+    return tf_full
 
 def find_most_salient(docs, k):
     '''
@@ -118,11 +125,19 @@ def find_most_salient(docs, k):
     '''
 
     # Your code for Task 1.4 goes here
-    d = dict()
-    for lists in docs:
-        for words in lists: 
-            d[words] = calc_tf(lists)*calc_idf(docs)
-    sort_d = sorted((term,tf_idf) for (term,tf_idf) in d.items())  
-
-    # Replace return value with an appropriate value
-    return sort_d[:k]
+    tf = calc_tf(docs)
+    idf = calc_idf(docs)
+    tf_idf = []
+    for doc in tf:
+        doc_tfidf = {}
+        for term,tf_2 in doc.items(): 
+            doc_tfidf[term] = tf_2 * idf[term]
+        tf_idf.append(doc_tfidf) 
+    for dic in tf_idf:
+        most_sal = []
+        final = []
+        for key,v in dic.items():
+            most_sal.append((key,v))
+        sorted_sal = sort_count_pairs(most_sal)
+    final.append(find_top_k(sorted_sal,k))
+    return final 
