@@ -53,7 +53,7 @@ def clean_tweets(tweets, entity_key):
         first_iteration.append(tweet['entities'][hashtags])
     for i in first_iteration: 
         for x in i: 
-            second_iteration.append(x[text])
+            second_iteration.append(x[text].lower())
     return second_iteration
 
     
@@ -73,13 +73,13 @@ def find_top_k_entities(tweets, entity_key, k):
     good_tweets = clean_tweets(tweets, entity_key)
 
     # Your code for Task 2.1 goes here
-    top_k = basic_algorithms.find_top_k(good_tweets,k)
+    top_k = find_top_k(good_tweets,k)
     # Replace None with appropriate value
     return top_k 
 
 
 def find_min_count_entities(tweets, entity_key, min_count):
-     '''
+    '''
      Find the entitites that occur at least min_count times.
 
      Inputs:
@@ -89,16 +89,37 @@ def find_min_count_entities(tweets, entity_key, min_count):
          min_count: integer
 
      Returns: list of entity, count pairs
-     '''
-
-     # Your code for Task 2.2 goes here
-    okay_tweets = clean_tweets(tweets,entity_key)
-    min_k = basic_algorithms.find_min_count(okay_tweets,min_count)
-    #Replace None with appropriate value
+    '''
+    # Your code for Task 2.2 goes here
+    good_tweets = clean_tweets(tweets,entity_key)
+    min_k = find_min_count(good_tweets,min_count)
     return min_k
 
+def preprocess(tweet, stopwords): 
+    '''
+    docstring
+    '''
+     
+    words = tweet['abridged_text'].split()
+    list_lower = []
+    for word in words: 
+        list_lower.append(word.lower())
+    punc = []
+    for word in list_lower: 
+        word = word.strip(PUNCTUATION)
+        if word.startswith(STOP_PREFIXES) == False: 
+            punc.append(word)
+    return punc
+    # stopw = []
+    # if stopwords == True: 
+    #     for word in punc: 
+    #         if word not in STOP_WORDS: 
+    #             stopw.append(word)
+    #         return stopw
 
- def gen_n_grams(tweets,n): 
+
+
+def gen_n_grams(tweets,n): 
      '''
      docstring
      '''
@@ -114,17 +135,17 @@ def find_min_count_entities(tweets, entity_key, min_count):
          current= []
      return last
 
- def count_n_grams(k,tweets):
+def count_n_grams(k,tweets):
 
- rv = {}
-     for i in range(0, len(tweets)-k+1):
-         subseq = tweets[i:i+k]
-         v = rv.get(subseq, 0)
+    rv = {}
+    for i in range(0, len(tweets)-k+1):
+        subseq = tweets[i:i+k]
+        v = rv.get(subseq, 0)
         rv[subseq] = v + 1
-     return list(rv.items())
+    return list(rv.items())
 
 
- def find_top_k_ngrams(tweets, n, k):
+def find_top_k_ngrams(tweets, n, k):
      '''
      Find k most frequently occurring n-grams across all tweets
 
@@ -141,7 +162,7 @@ def find_min_count_entities(tweets, entity_key, min_count):
      return None
 
 
- def find_min_count_ngrams(tweets, n, min_count):
+def find_min_count_ngrams(tweets, n, min_count):
      '''
      Find n-grams that occur at least min_count times across all
      tweets.
@@ -159,7 +180,7 @@ def find_min_count_entities(tweets, entity_key, min_count):
      return None
 
 
- def find_most_salient_ngrams(tweets, n, k):
+def find_most_salient_ngrams(tweets, n, k):
      '''
      Find k most salient n-grams for each tweet.
 
