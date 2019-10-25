@@ -1,7 +1,7 @@
 '''
 Analyzing Election Tweets
 
-YOUR NAME
+Deblina Mukherjee
 
 Algorithms for efficiently counting and sorting distinct `entities` or
 unique values, are widely used in data analysis. Functions to
@@ -82,9 +82,12 @@ def calc_idf(docs):
     for doc in docs: 
         uniquewords = count_tokens(doc)
         for key,value in uniquewords: 
+            #print("key:", key)
+            #print("value", value)
             idf[key] = idf.get(key, 0)+1
+            #print("idf key:", idf[key])
     for value in idf.values(): 
-        value = math.log(numer/value)
+        value = math.log(numer/abs(value))
     return idf
 
 def calc_tf(docs): 
@@ -131,13 +134,17 @@ def find_most_salient(docs, k):
     for doc in tf:
         doc_tfidf = {}
         for term,tf_2 in doc.items(): 
+            #print(tf_2, "tf2")
+            #print(term, "term",)
             doc_tfidf[term] = tf_2 * idf[term]
-        tf_idf.append(doc_tfidf) 
+            #print("doctfidf term:", doc_tfidf[term])
+            #print('idf term', idf[term])
+        tf_idf.append(doc_tfidf)
+    final = []
     for dic in tf_idf:
-        most_sal = []
-        final = []
-        for key,v in dic.items():
-            most_sal.append((key,v))
-        sorted_sal = sort_count_pairs(most_sal)
-    final.append(find_top_k(sorted_sal,k))
-    return final 
+        doc = [] 
+        sorting = sort_count_pairs(dic.items())[:k]
+        for lists in sorting: 
+            doc.append(lists[0])
+        final.append(doc)
+    return final
