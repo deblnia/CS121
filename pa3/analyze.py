@@ -1,7 +1,7 @@
 '''
 Analyzing Election Tweets
 
-YOUR NAME
+Deblina Mukherjee 
 
 Use the algorithms in the previous part on the dataset of
 tweets. Every collection of tweets is represented as a JSON
@@ -44,7 +44,20 @@ STOP_PREFIXES = ("@", "#", "http", "&amp")
 
 #####################  MODIFY THIS CODE #####################
 
-# Task 1
+# Task 1n
+def clean_tweets(tweets, entity_key):
+    hashtags,text = entity_key
+    first_iteration = []
+    second_iteration = []
+    for tweet in tweets: 
+        first_iteration.append(tweet['entities'][hashtags])
+    for i in first_iteration: 
+        for x in i: 
+            second_iteration.append(x[text])
+    return second_iteration
+
+    
+
 def find_top_k_entities(tweets, entity_key, k):
     '''
     Find the K most frequently occuring entitites
@@ -57,77 +70,107 @@ def find_top_k_entities(tweets, entity_key, k):
 
     Returns: list of entity, count pairs
     '''
+    good_tweets = clean_tweets(tweets, entity_key)
 
     # Your code for Task 2.1 goes here
+    top_k = basic_algorithms.find_top_k(good_tweets,k)
     # Replace None with appropriate value
-    return None
+    return top_k 
 
 
 def find_min_count_entities(tweets, entity_key, min_count):
-    '''
-    Find the entitites that occur at least min_count times.
+     '''
+     Find the entitites that occur at least min_count times.
 
-    Inputs:
-        tweets: a list of tweets
+     Inputs:
+         tweets: a list of tweets
         entity_key: a pair ("hashtags", "text"),
-          ("user_mentions", "screen_name"), etc
-        min_count: integer
+           ("user_mentions", "screen_name"), etc
+         min_count: integer
 
-    Returns: list of entity, count pairs
-    '''
+     Returns: list of entity, count pairs
+     '''
 
-    # Your code for Task 2.2 goes here
-    # Replace None with appropriate value
-    return None
+     # Your code for Task 2.2 goes here
+    okay_tweets = clean_tweets(tweets,entity_key)
+    min_k = basic_algorithms.find_min_count(okay_tweets,min_count)
+    #Replace None with appropriate value
+    return min_k
 
 
-def find_top_k_ngrams(tweets, n, k):
-    '''
-    Find k most frequently occurring n-grams across all tweets
+ def gen_n_grams(tweets,n): 
+     '''
+     docstring
+     '''
+     bases = tweets
 
-    Inputs:
-        tweets: a list of tweets
-        n: integer
+     last = bases
+     current = []
+     for i in range(k-1):
+         for b in bases:
+             for l in last:
+                 current.append(l+b)
+         last = current
+         current= []
+     return last
+
+ def count_n_grams(k,tweets):
+
+ rv = {}
+     for i in range(0, len(tweets)-k+1):
+         subseq = tweets[i:i+k]
+         v = rv.get(subseq, 0)
+        rv[subseq] = v + 1
+     return list(rv.items())
+
+
+ def find_top_k_ngrams(tweets, n, k):
+     '''
+     Find k most frequently occurring n-grams across all tweets
+
+     Inputs:
+         tweets: a list of tweets
+         n: integer
         k: integer
 
-    Returns: list of key/value pairs
-    '''
+     Returns: list of key/value pairs
+     '''
 
-    # Your code for Task 2.3 goes here
-    # Replace None with appropriate value
-    return None
-
-
-def find_min_count_ngrams(tweets, n, min_count):
-    '''
-    Find n-grams that occur at least min_count times across all
-    tweets.
-
-    Inputs:
-        tweets: a list of tweets
-        n: integer
-        min_count: integer
-
-    Returns: list of ngram/value pairs
-    '''
-
-    # Your code for Task 2.4 goes here
-    # Replace None with appropriate value
-    return None
+     # Your code for Task 2.3 goes here
+     # Replace None with appropriate value
+     return None
 
 
-def find_most_salient_ngrams(tweets, n, k):
-    '''
-    Find k most salient n-grams for each tweet.
+ def find_min_count_ngrams(tweets, n, min_count):
+     '''
+     Find n-grams that occur at least min_count times across all
+     tweets.
 
-    Inputs:
-        tweets: a list of tweets
-        n: integer
-        k: integer
+     Inputs:
+         tweets: a list of tweets
+         n: integer
+         min_count: integer
 
-    Returns: list of list of strings
-    '''
+     Returns: list of ngram/value pairs
+     '''
 
-    # Your code for Task 2.5 goes here
-    # Replace None with appropriate value
-    return None
+     # Your code for Task 2.4 goes here
+     # Replace None with appropriate value
+     return None
+
+
+ def find_most_salient_ngrams(tweets, n, k):
+     '''
+     Find k most salient n-grams for each tweet.
+
+     Inputs:
+         tweets: a list of tweets
+         n: integer
+         k: integer
+
+     Returns: list of list of strings
+     '''
+
+     # Your code for Task 2.5 goes here
+     # Replace None with appropriate value
+     return None

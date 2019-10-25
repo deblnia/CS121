@@ -72,36 +72,23 @@ def find_min_count(tokens, min_count):
             good_vals.append((key,value))
     good_vals = sort_count_pairs(good_vals)
     return good_vals
-    # Replace return value with an appropriate value
 
 def calc_idf(docs): 
-    #computes tf and idf 
     numer = len(docs)
     uniquewords = []
     idf = dict()
     for doc in docs: 
         uniquewords = count_tokens(doc)
         for key,value in uniquewords: 
-            #print("key:", key)
-            #print("value", value)
             idf[key] = idf.get(key, 0)+1
-            #print("idf key:", idf[key])
-    for value in idf.values(): 
-        value = math.log(numer/abs(value))
+    for key,value in idf.items(): 
+        idf[key] = math.log(numer/value)
     return idf
 
 def calc_tf(docs): 
     '''
     docstring
-    '''
-    # loop through each doc calc tf scores for each doc using count_token 
-    # multiply by idf 
-    # sort using sort count pairs and then slice and return 
-    # sort list retrned from count_tokens and use first 
-    # do it in one loop 
-    # append intermediate lists into return value  
-    # list of dictionaries (key, value)   
-    # change values in dictionary 
+    ''' 
     tf_full = []
     for doc in docs: 
         if len(doc) == 0:
@@ -134,11 +121,7 @@ def find_most_salient(docs, k):
     for doc in tf:
         doc_tfidf = {}
         for term,tf_2 in doc.items(): 
-            #print(tf_2, "tf2")
-            #print(term, "term",)
             doc_tfidf[term] = tf_2 * idf[term]
-            #print("doctfidf term:", doc_tfidf[term])
-            #print('idf term', idf[term])
         tf_idf.append(doc_tfidf)
     final = []
     for dic in tf_idf:
