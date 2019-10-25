@@ -21,8 +21,6 @@ def count_tokens(tokens):
 
     Returns: list (token, number of occurrences).
     '''
-
-    # Your code for Task 1.1 goes here
     freq = dict() 
     for key in tokens: 
         if key in freq: 
@@ -30,6 +28,7 @@ def count_tokens(tokens):
         else: 
             freq[key] = 1
     return list(freq.items())
+
 
 def find_top_k(tokens, k):
     '''
@@ -47,7 +46,6 @@ def find_top_k(tokens, k):
     err_msg = "In find_top_k, k must be a non-negative integer"
     assert k >= 0, err_msg
 
-    # Your code for Task 1.2 goes here
     counted = count_tokens(tokens)
     sorted_tokens = sort_count_pairs(counted) 
     return sorted_tokens[:k]    
@@ -63,8 +61,6 @@ def find_min_count(tokens, min_count):
 
     Returns: sorted list of tuples
     '''
-
-    # Your code for Task 1.3 goes here
     tokens = count_tokens(tokens)
     good_vals = []
     for key, value in tokens:
@@ -73,7 +69,16 @@ def find_min_count(tokens, min_count):
     good_vals = sort_count_pairs(good_vals)
     return good_vals
 
-def calc_idf(docs): 
+
+def calc_idf(docs):
+    '''
+    Calculates the IDF scores for a given corpus. 
+
+    Inputs: 
+        docs: a list of lists (must be hashable/comparable)
+
+    Returns: a dictionary with the token as key and the IDF score as value
+    ''' 
     numer = len(docs)
     uniquewords = []
     idf = dict()
@@ -85,9 +90,15 @@ def calc_idf(docs):
         idf[key] = math.log(numer/value)
     return idf
 
+
 def calc_tf(docs): 
     '''
-    docstring
+    Calculates TF scores per document for a corpus of documents. 
+
+    Inputs: 
+        docs: a list of lists (must be hashable/comparable)
+    Returns: a list of dictionaries where each dictionary is a document 
+                containing the token as key and TF score as value  
     ''' 
     tf_full = []
     for doc in docs: 
@@ -102,6 +113,7 @@ def calc_tf(docs):
             tf_full.append(tf_doc) 
     return tf_full
 
+
 def find_most_salient(docs, k):
     '''
     Find the k most salient tokens in each document
@@ -113,8 +125,6 @@ def find_most_salient(docs, k):
     Returns: list of sorted list of tokens
      (inner lists are in decreasing order of tf-idf score)
     '''
-
-    # Your code for Task 1.4 goes here
     tf = calc_tf(docs)
     idf = calc_idf(docs)
     tf_idf = []

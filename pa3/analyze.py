@@ -109,13 +109,13 @@ def preprocess(tweet, stopwords):
         word = word.strip(PUNCTUATION)
         if word.startswith(STOP_PREFIXES) == False: 
             punc.append(word)
-    return punc
-    # stopw = []
-    # if stopwords == True: 
-    #     for word in punc: 
-    #         if word not in STOP_WORDS: 
-    #             stopw.append(word)
-    #         return stopw
+        return punc
+    stopw = []
+    if stopwords == True: 
+        for word in punc: 
+            if word not in STOP_WORDS: 
+                 stopw.append(word)
+        return stopw
 
 
 
