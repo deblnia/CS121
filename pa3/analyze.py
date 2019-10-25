@@ -43,9 +43,14 @@ STOP_PREFIXES = ("@", "#", "http", "&amp")
 
 
 #####################  MODIFY THIS CODE #####################
-
-# Task 1n
 def clean_tweets(tweets, entity_key):
+    '''
+    Indexes into the dictionary for a given entity_key pair. 
+    Input: 
+        tweets: a list of tweets 
+        entity_key: a tuple of entities and key 
+    Returns: a list of the desired entity and key 
+    '''
     hashtags,text = entity_key
     first_iteration = []
     second_iteration = []
@@ -55,7 +60,6 @@ def clean_tweets(tweets, entity_key):
         for x in i: 
             second_iteration.append(x[text].lower())
     return second_iteration
-
     
 
 def find_top_k_entities(tweets, entity_key, k):
@@ -71,10 +75,7 @@ def find_top_k_entities(tweets, entity_key, k):
     Returns: list of entity, count pairs
     '''
     good_tweets = clean_tweets(tweets, entity_key)
-
-    # Your code for Task 2.1 goes here
     top_k = find_top_k(good_tweets,k)
-    # Replace None with appropriate value
     return top_k 
 
 
@@ -95,28 +96,39 @@ def find_min_count_entities(tweets, entity_key, min_count):
     min_k = find_min_count(good_tweets,min_count)
     return min_k
 
+
 def preprocess(tweet, stopwords): 
     '''
-    docstring
+    Works through all the pre-processing steps listed in the assignment 
+    Inputs: 
+        tweet: one tweet (dictionary)
+        stopwords: a boolean (True/False), specifying whether stopwords 
+                    should be removed 
+    Returns: a processed tweet (a list of words) 
     '''
-     
     words = tweet['abridged_text'].split()
     list_lower = []
     for word in words: 
         list_lower.append(word.lower())
     punc = []
-    for word in list_lower: 
-        word = word.strip(PUNCTUATION)
-        if word.startswith(STOP_PREFIXES) == False: 
-            punc.append(word)
-        return punc
-    stopw = []
-    if stopwords == True: 
+    if stopwords == True:
+        for word in list_lower: 
+            word = word.strip(PUNCTUATION)
+            if word.startswith(STOP_PREFIXES) == False: 
+                punc.append(word)
         for word in punc: 
+            stopw = []
             if word not in STOP_WORDS: 
-                 stopw.append(word)
+                stopw.append(word)
         return stopw
+    else: 
+        for word in list_lower: 
+            word = word.strip(PUNCTUATION)
+            if word.startswith(STOP_PREFIXES) == False: 
+                punc.append(word)
+        return punc
 
+    
 
 
 def gen_n_grams(tweets,n): 
