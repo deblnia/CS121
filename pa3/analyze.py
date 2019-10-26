@@ -84,7 +84,7 @@ def find_min_count_entities(tweets, entity_key, min_count):
      Find the entitites that occur at least min_count times.
 
      Inputs:
-         tweets: a list of tweets
+        tweets: a list of tweets
         entity_key: a pair ("hashtags", "text"),
            ("user_mentions", "screen_name"), etc
          min_count: integer
@@ -116,49 +116,38 @@ def preprocess(tweet, stopwords):
             word = word.strip(PUNCTUATION)
             if word.startswith(STOP_PREFIXES) == False: 
                 punc.append(word)
+        stopw = []
         for word in punc: 
-            stopw = []
-            if word not in STOP_WORDS: 
-                stopw.append(word)
+            if word not in STOP_WORDS:
+                if len(word) != 0:  
+                    stopw.append(word)
         return stopw
     else: 
         for word in list_lower: 
             word = word.strip(PUNCTUATION)
             if word.startswith(STOP_PREFIXES) == False: 
-                punc.append(word)
+                if len(word) != 0: 
+                    punc.append(word)
         return punc
 
-    
 
-
-def gen_n_grams(tweets,n): 
-     '''
-     docstring
-     '''
-     bases = tweets
-
-     last = bases
-     current = []
-     for i in range(k-1):
-         for b in bases:
-             for l in last:
-                 current.append(l+b)
-         last = current
-         current= []
-     return last
-
-def count_n_grams(k,tweets):
-
-    rv = {}
-    for i in range(0, len(tweets)-k+1):
-        subseq = tweets[i:i+k]
-        v = rv.get(subseq, 0)
-        rv[subseq] = v + 1
-    return list(rv.items())
+def gen_n_grams(tweet,k): 
+    '''
+     Generates ngrams of length k given a tweet 
+     Input: 
+        tweet: a single tweet 
+        k: an integer 
+    Returns: a list of lists of ngrams  
+    '''
+    input_list = preprocess(tweet, True)
+    ngrams = []
+    for i in range(len(input_list)-(k-1)):
+        ngrams.append(tuple(input_list[i:i+k]))
+    return ngrams  
 
 
 def find_top_k_ngrams(tweets, n, k):
-     '''
+    '''
      Find k most frequently occurring n-grams across all tweets
 
      Inputs:
@@ -167,15 +156,16 @@ def find_top_k_ngrams(tweets, n, k):
         k: integer
 
      Returns: list of key/value pairs
-     '''
-
-     # Your code for Task 2.3 goes here
-     # Replace None with appropriate value
-     return None
+    '''
+    top_k = []
+    for tweet in tweets: 
+        ngrams = gen_n_grams(tweet,k)
+        top_k.append(find_top_k(ngrams,n))
+    return top_k[:k]
 
 
 def find_min_count_ngrams(tweets, n, min_count):
-     '''
+    '''
      Find n-grams that occur at least min_count times across all
      tweets.
 
@@ -185,15 +175,16 @@ def find_min_count_ngrams(tweets, n, min_count):
          min_count: integer
 
      Returns: list of ngram/value pairs
-     '''
-
-     # Your code for Task 2.4 goes here
-     # Replace None with appropriate value
-     return None
+    '''
+    min_ngrams = []
+    for tweet in tweets:
+        ngrams = gen_n_grams(tweet,k)
+        min_ngrams.append(find_min_count(ngrams,min_count))
+    return min_ngrams
 
 
 def find_most_salient_ngrams(tweets, n, k):
-     '''
+    '''
      Find k most salient n-grams for each tweet.
 
      Inputs:
@@ -202,8 +193,12 @@ def find_most_salient_ngrams(tweets, n, k):
          k: integer
 
      Returns: list of list of strings
-     '''
-
-     # Your code for Task 2.5 goes here
-     # Replace None with appropriate value
-     return None
+    '''
+    for tweet in tweets:
+        ngrams = []
+        input_list = preprocess(tweet, False)
+        for i in range(len(input_list)-(n-1)):
+            ngrams.append(tuple(input_list[i:i+n]))
+    sal_ngrams = []
+    sal_ngrams.append(find_most_salient(ngrams,k))
+    return []
