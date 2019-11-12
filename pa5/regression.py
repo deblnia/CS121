@@ -23,9 +23,14 @@ class DataSet(object):
             dir_path: (string) path to the directory that contains the
               file
         '''
+        self.dir_path = dir_path
 
-        # REPLACE pass WITH YOUR CODE
-        pass
+    def load(self.dir_path): 
+    	''' 
+    	A method to load in the CSV and JSON files
+    	'''
+    	csv = prepend_ones_column(load_numpy_array(self.dir_path))
+    	json = load_json_file(self.dir_path)
 
 
 class Model(object):
