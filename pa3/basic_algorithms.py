@@ -1,7 +1,11 @@
 '''
 Analyzing Election Tweets
 
+<<<<<<< HEAD
 Deblina Mukherjee
+=======
+YOUR NAME
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 Algorithms for efficiently counting and sorting distinct `entities` or
 unique values, are widely used in data analysis. Functions to
@@ -21,6 +25,7 @@ def count_tokens(tokens):
 
     Returns: list (token, number of occurrences).
     '''
+<<<<<<< HEAD
     freq = dict() 
     for key in tokens: 
         if key in freq: 
@@ -28,6 +33,12 @@ def count_tokens(tokens):
         else: 
             freq[key] = 1
     return list(freq.items())
+=======
+
+    # Your code for Task 1.1 goes here
+    # Replace return value with an appropriate value
+    return []
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 
 def find_top_k(tokens, k):
@@ -46,9 +57,15 @@ def find_top_k(tokens, k):
     err_msg = "In find_top_k, k must be a non-negative integer"
     assert k >= 0, err_msg
 
+<<<<<<< HEAD
     counted = count_tokens(tokens)
     sorted_tokens = sort_count_pairs(counted) 
     return sorted_tokens[:k]    
+=======
+    # Your code for Task 1.2 goes here
+    # Replace return value with an appropriate value
+    return []
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 
 def find_min_count(tokens, min_count):
@@ -61,6 +78,7 @@ def find_min_count(tokens, min_count):
 
     Returns: sorted list of tuples
     '''
+<<<<<<< HEAD
     tokens = count_tokens(tokens)
     good_vals = []
     for key, value in tokens:
@@ -112,6 +130,12 @@ def calc_tf(docs):
                 tf_doc[k] = 0.5+0.5*(v/max_tf)
             tf_full.append(tf_doc) 
     return tf_full
+=======
+
+    # Your code for Task 1.3 goes here
+    # Replace return value with an appropriate value
+    return []
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 
 def find_most_salient(docs, k):
@@ -125,6 +149,7 @@ def find_most_salient(docs, k):
     Returns: list of sorted list of tokens
      (inner lists are in decreasing order of tf-idf score)
     '''
+<<<<<<< HEAD
     tf = calc_tf(docs)
     idf = calc_idf(docs)
     tf_idf = []
@@ -141,3 +166,9 @@ def find_most_salient(docs, k):
             doc.append(lists[0])
         final.append(doc)
     return final
+=======
+
+    # Your code for Task 1.4 goes here
+    # Replace return value with an appropriate value
+    return []
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0

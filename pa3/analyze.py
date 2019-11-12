@@ -1,7 +1,11 @@
 '''
 Analyzing Election Tweets
 
+<<<<<<< HEAD
 Deblina Mukherjee 
+=======
+YOUR NAME
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 Use the algorithms in the previous part on the dataset of
 tweets. Every collection of tweets is represented as a JSON
@@ -43,6 +47,7 @@ STOP_PREFIXES = ("@", "#", "http", "&amp")
 
 
 #####################  MODIFY THIS CODE #####################
+<<<<<<< HEAD
 def clean_tweets(tweets, entity_key):
     '''
     Indexes into the dictionary for a given entity_key pair. 
@@ -62,6 +67,10 @@ def clean_tweets(tweets, entity_key):
     return second_iteration
     
 
+=======
+
+# Task 1
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 def find_top_k_entities(tweets, entity_key, k):
     '''
     Find the K most frequently occuring entitites
@@ -74,13 +83,21 @@ def find_top_k_entities(tweets, entity_key, k):
 
     Returns: list of entity, count pairs
     '''
+<<<<<<< HEAD
     good_tweets = clean_tweets(tweets, entity_key)
     top_k = find_top_k(good_tweets,k)
     return top_k 
+=======
+
+    # Your code for Task 2.1 goes here
+    # Replace None with appropriate value
+    return None
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 
 def find_min_count_entities(tweets, entity_key, min_count):
     '''
+<<<<<<< HEAD
      Find the entitites that occur at least min_count times.
 
      Inputs:
@@ -144,10 +161,27 @@ def gen_n_grams(tweet,k):
     for i in range(len(input_list)-(k-1)):
         ngrams.append(tuple(input_list[i:i+k]))
     return ngrams  
+=======
+    Find the entitites that occur at least min_count times.
+
+    Inputs:
+        tweets: a list of tweets
+        entity_key: a pair ("hashtags", "text"),
+          ("user_mentions", "screen_name"), etc
+        min_count: integer
+
+    Returns: list of entity, count pairs
+    '''
+
+    # Your code for Task 2.2 goes here
+    # Replace None with appropriate value
+    return None
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 
 def find_top_k_ngrams(tweets, n, k):
     '''
+<<<<<<< HEAD
      Find k most frequently occurring n-grams across all tweets
 
      Inputs:
@@ -162,10 +196,26 @@ def find_top_k_ngrams(tweets, n, k):
         ngrams = gen_n_grams(tweet,k)
         top_k.append(find_top_k(ngrams,n))
     return top_k[:k]
+=======
+    Find k most frequently occurring n-grams across all tweets
+
+    Inputs:
+        tweets: a list of tweets
+        n: integer
+        k: integer
+
+    Returns: list of key/value pairs
+    '''
+
+    # Your code for Task 2.3 goes here
+    # Replace None with appropriate value
+    return None
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 
 def find_min_count_ngrams(tweets, n, min_count):
     '''
+<<<<<<< HEAD
      Find n-grams that occur at least min_count times across all
      tweets.
 
@@ -181,10 +231,27 @@ def find_min_count_ngrams(tweets, n, min_count):
         ngrams = gen_n_grams(tweet,k)
         min_ngrams.append(find_min_count(ngrams,min_count))
     return min_ngrams
+=======
+    Find n-grams that occur at least min_count times across all
+    tweets.
+
+    Inputs:
+        tweets: a list of tweets
+        n: integer
+        min_count: integer
+
+    Returns: list of ngram/value pairs
+    '''
+
+    # Your code for Task 2.4 goes here
+    # Replace None with appropriate value
+    return None
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
 
 
 def find_most_salient_ngrams(tweets, n, k):
     '''
+<<<<<<< HEAD
      Find k most salient n-grams for each tweet.
 
      Inputs:
@@ -202,3 +269,18 @@ def find_most_salient_ngrams(tweets, n, k):
     sal_ngrams = []
     sal_ngrams.append(find_most_salient(ngrams,k))
     return []
+=======
+    Find k most salient n-grams for each tweet.
+
+    Inputs:
+        tweets: a list of tweets
+        n: integer
+        k: integer
+
+    Returns: list of list of strings
+    '''
+
+    # Your code for Task 2.5 goes here
+    # Replace None with appropriate value
+    return None
+>>>>>>> 772604324d9e6fbf8e76ecb03659b77d09955de0
