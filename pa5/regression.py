@@ -23,15 +23,17 @@ class DataSet(object):
             dir_path: (string) path to the directory that contains the
               file
         '''
-        self.dir_path = dir_path
-
-    def load(self.dir_path): 
-    	''' 
-    	A method to load in the CSV and JSON files
-    	'''
-    	csv = prepend_ones_column(load_numpy_array(self.dir_path))
-    	json = load_json_file(self.dir_path)
-
+    	labels, csv = load_numpy_array(dir_path)
+    	self.csv = prepend_ones_column(csv)
+    	json_full = load_json_file(dir_path)
+    	self.name = json_full['name']
+    	self.predictor_vars = json_full['predictor_vars']
+    	self.dependent_var = json_full['dependent_var']
+    	self.training_fraction = json_full['training_fraction']
+    	self.seed = json_full['seed']
+    	self.train, self.test = train_test_split(csv, 
+    							train_size = self.training_fraction,
+    							test_size = None)
 
 class Model(object):
     '''
@@ -48,7 +50,12 @@ class Model(object):
         '''
 
         # REPLACE pass WITH YOUR CODE
-        pass
+        #self.R2 = 
+        #self.adj_R2 =
+        self.dep_var = dataset.csv[:,dataset.dependent_var] 
+        self.pred_vars = []+ dataset.csv[:,i] for i in dataset.predictor_vars
+        self.beta = linear_regression(self.train)
+
 
     def __repr__(self):
         '''
@@ -72,9 +79,11 @@ def compute_single_var_models(dataset):
     Returns:
         List of Model objects, each representing a single-variable model
     '''
-
+    models = []
+    for pred in range(len(dataset.predictor_vars))
+    models.append(dataset.beta)
     # Replace [] with the list of models
-    return []
+    return models
 
 
 def compute_all_vars_model(dataset):
