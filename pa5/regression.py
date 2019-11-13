@@ -24,16 +24,12 @@ class DataSet(object):
               file
         '''
         labels, self.csv = util.load_numpy_array(dir_path, "data.csv")
-        json_full = util.load_json_file(dir_path, "parameters.json")
+        json_full = load_json_file(dir_path, "parameters.json")
         self.name = json_full['name']
         self.predictor_vars = json_full['predictor_vars']
         self.dependent_var = json_full['dependent_var']
         self.training_fraction = json_full['training_fraction']
         self.seed = json_full['seed']
-        self.train, self.test = train_test_split(dataset.csv, 
-                                train_size = self.training_fraction,
-                                test_size = None,
-                                random_state = self.seed)
         
 
 class Model(object):
@@ -51,7 +47,11 @@ class Model(object):
         '''
 
         # REPLACE pass WITH YOUR CODE
-        dataset.train = prepend_ones_column(dataset.train)
+        self.train, self.test = train_test_split(dataset.csv, 
+                                train_size = self.training_fraction,
+                                test_size = None,
+                                random_state = self.seed)
+        self.train = prepend_ones_column(self.train)
         self.dep_var = dataset.train[:,dataset.dependent_var] 
         self.pred_vars = dataset.train[:,[pred_vars]] 
         self.beta = linear_regression(self.pred_vars,self.dep_var)
