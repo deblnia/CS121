@@ -51,11 +51,12 @@ class Model(object):
                                 train_size = dataset.training_fraction,
                                 test_size = None,
                                 random_state = dataset.seed)
-        self.train = util.prepend_ones_column(self.train)
-        self.dep_var = self.train[:,dataset.dependent_var] 
-        self.pred_vars = self.train[:,[pred_vars]] 
-        self.beta = util.linear_regression(self.pred_vars,self.dep_var)
-        self.pred_vals = util.apply_beta(self.beta, self.train)
+        self.y = self.train[:,dataset.dependent_var]
+        self.pred_vars = pred_vars 
+        self.pred_cols = self.train[:,self.pred_vars]
+        self.X = util.prepend_ones_column(self.pred_cols)
+        self.beta = util.linear_regression(self.X,self.y)
+        self.model_vals = util.apply_beta(self.beta, self.X)
 
 
     def __repr__(self):
@@ -65,15 +66,15 @@ class Model(object):
 
         # Replace this return statement with one that returns a more
         # helpful string representation
-        return "!!! You haven't implemented the Model __repr__ method yet !!!"
+        return "X:" + str(self.pred_cols)
 
     
     def R2(self): 
         '''
         Generates R2 values for given model  
         ''' 
-        self.R2 = 1 - (np.sum((self.dep_var - self.pred_vals)**2
-                                /np.sum((self.pred_vals - dataset.train)**2))) 
+        self.R2 = 1 - (np.sum((self.y - self.model_vals)**2
+                                /np.sum((self.model_vals - self.train.mean())**2))) 
         self.adj_R2 = None
 
 
@@ -88,8 +89,8 @@ def compute_single_var_models(dataset):
         List of Model objects, each representing a single-variable model
     '''
     models = []
-    for i in dataset.pred_vars: 
-        models.append(Model(dataset,[i])) 
+    for i in dataset.predictor_vars: 
+        models.append(Model(dataset,[i+1])) 
     return models
 
 
@@ -119,8 +120,8 @@ def compute_best_pair(dataset):
         A Model object for the best bivariate model
     '''
     # Replace None with a model object
-    for var in pred_var:
-        for another_var in pred_var: 
+    for var in dataset.predictor_vars:
+        for another_var in dataset.predictor_vars: 
             Model(dataset, [var,another_var])
 
     return None
@@ -140,6 +141,7 @@ def backward_elimination(dataset):
     '''
 
     # Replace [] with the list of models
+    
     return []
 
 
