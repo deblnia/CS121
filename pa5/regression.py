@@ -24,7 +24,7 @@ class DataSet(object):
               file
         '''
         labels, self.csv = util.load_numpy_array(dir_path, "data.csv")
-        json_full = load_json_file(dir_path, "parameters.json")
+        json_full = util.load_json_file(dir_path, "parameters.json")
         self.name = json_full['name']
         self.predictor_vars = json_full['predictor_vars']
         self.dependent_var = json_full['dependent_var']
@@ -48,14 +48,14 @@ class Model(object):
 
         # REPLACE pass WITH YOUR CODE
         self.train, self.test = train_test_split(dataset.csv, 
-                                train_size = self.training_fraction,
+                                train_size = dataset.training_fraction,
                                 test_size = None,
-                                random_state = self.seed)
-        self.train = prepend_ones_column(self.train)
-        self.dep_var = dataset.train[:,dataset.dependent_var] 
-        self.pred_vars = dataset.train[:,[pred_vars]] 
-        self.beta = linear_regression(self.pred_vars,self.dep_var)
-        self.pred_vals = apply_beta(self.beta, dataset.train)
+                                random_state = dataset.seed)
+        self.train = util.prepend_ones_column(self.train)
+        self.dep_var = self.train[:,dataset.dependent_var] 
+        self.pred_vars = self.train[:,[pred_vars]] 
+        self.beta = util.linear_regression(self.pred_vars,self.dep_var)
+        self.pred_vals = util.apply_beta(self.beta, self.train)
 
 
     def __repr__(self):
@@ -77,7 +77,7 @@ class Model(object):
         self.adj_R2 = None
 
 
-def compute_single_var_models(dataset)
+def compute_single_var_models(dataset):
     '''
     Computes all the single-variable models for a dataset
 
